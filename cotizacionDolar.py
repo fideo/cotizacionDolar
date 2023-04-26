@@ -21,7 +21,7 @@ for cotizacion in tabla_dolar.find_all('tbody'):
   dolar = cotizacion.find_all('td')[2].text
   print(dolar[0:6] + " ")
 
-print(tabla_hora.text[20:25])
+print("Hora act. " + tabla_hora.text[20:25])
 
 # Abro el archivo valorDolar.txt donde almaceno el valor dolar.
 valorArchivo = open('./cotizacion.txt', "r+")
