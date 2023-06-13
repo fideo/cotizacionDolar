@@ -36,3 +36,4 @@ typing_extensions==4.5.0
 urllib3==1.26.15
 w3lib==2.1.1
 zope.interface==6.0
+plyer~=2.1.0

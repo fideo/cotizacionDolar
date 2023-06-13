@@ -1,5 +1,7 @@
+import time
 import requests
 from bs4 import BeautifulSoup
+from plyer import notification
 
 # Obtengo la url del sitio a obtener los datos
 url = 'https://www.bna.com.ar/Personas'
@@ -19,13 +21,24 @@ dolar = 0
 # Recorro la tabla encontrando los tags tbody
 for cotizacion in tabla_dolar.find_all('tbody'):
   dolar = cotizacion.find_all('td')[2].text
-  print(dolar[0:6] + " ")
+  dolar_formateado = dolar[0:6] + " "
+  #print(dolar[0:6] + " ")
+  print(dolar_formateado)
 
 print("Hora act. " + tabla_hora.text[20:25])
 
 # Abro el archivo valorDolar.txt donde almaceno el valor dolar.
 valorArchivo = open('./cotizacion.txt', "r+")
 cotizacionActual=valorArchivo.read(10).strip("\n")
+
+notification.notify(
+            title="CAMBIÓ LA COTIZACIÓN DEL DOLAR",
+            message=dolar_formateado,
+
+            # displaying time
+            timeout=2
+    )
+time.sleep(10)
 
 # Me posiciono en el primer lugar del documento para actualizar el archivo.
 valorArchivo.seek(0, 0)
