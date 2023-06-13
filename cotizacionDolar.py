@@ -28,17 +28,18 @@ for cotizacion in tabla_dolar.find_all('tbody'):
 print("Hora act. " + tabla_hora.text[20:25])
 
 # Abro el archivo valorDolar.txt donde almaceno el valor dolar.
-valorArchivo = open('./cotizacion.txt', "r+")
+valorArchivo = open('/home/fideo/proyectos/cotizacionDolar/cotizacion.txt', "r+")
 cotizacionActual=valorArchivo.read(10).strip("\n")
 
-notification.notify(
-            title="CAMBIÓ LA COTIZACIÓN DEL DOLAR",
-            message=dolar_formateado,
-
-            # displaying time
-            timeout=2
-    )
-time.sleep(10)
+#if cotizacionActual != dolar:
+#    notification.notify(
+#                title="CAMBIÓ LA COTIZACIÓN DEL DOLAR",
+#                message=dolar_formateado,
+#
+#                # displaying time
+#                timeout=2
+#        )
+#    time.sleep(10)
 
 # Me posiciono en el primer lugar del documento para actualizar el archivo.
 valorArchivo.seek(0, 0)
