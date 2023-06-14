@@ -22,14 +22,14 @@ dolar = 0
 # Recorro la tabla encontrando los tags tbody
 for cotizacion in tabla_dolar.find_all('tbody'):
     dolar = cotizacion.find_all('td')[2].text
-    dolar_formateado = dolar[0:6] + " "
+    dolar_formateado = dolar[0:6]
     # print(dolar[0:6] + " ")
     print(dolar_formateado)
 
-# print("Hora act. " + tabla_hora.text[20:25])
+print(" - Hora act. " + tabla_hora.text[20:25])
 
 path_actual = os.getcwd()
-print(path_actual)
+# print(path_actual)
 # Abro el archivo valorDolar.txt donde almaceno el valor dolar.
 valorArchivo = open(path_actual+'/cotizacion.txt', "r+")
 cotizacionActual = valorArchivo.read(10).strip("\n")
@@ -48,7 +48,7 @@ if cotizacionActual[0:6] != dolar[0:6]:
 
 # Me posiciono en el primer lugar del documento para actualizar el archivo.
 valorArchivo.seek(0, 0)
-# escribo el valor del dolar y le digo que tome desde la posición 0 hasta la 6 dolar[0:6]
+# escribo el valor del dólar y le digo que tome desde la posición 0 hasta la 6 dolar[0:6]
 valorArchivo.write(dolar[0:6])
 valorArchivo.write(" Hora ")
 valorArchivo.write(tabla_hora.text[20:25])
