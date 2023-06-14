@@ -7,13 +7,13 @@ from plyer import notification
 # Obtengo la url del sitio a obtener los datos
 url = 'https://www.bna.com.ar/Personas'
 
-# A traves de request obtengo todo el codigo de la url pasada
+# A través de request obtengo todo el código de la url pasada
 r = requests.get(url)
 
 # Paso a BeautifulSoup lo obtenido como texto y lo parseo como HTML
 soup = BeautifulSoup(r.text, 'html.parser')
 
-# Busco el tag table con class table cotizacion
+# Busco el tag table con class table cotización
 tabla_dolar = soup.find('table', class_='table cotizacion')
 tabla_hora = soup.find('div', class_='legal')
 
