@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="890e8c80-56cc-4a91-bfbd-b2fa81250360" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cotizacion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cotizacion.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cotizacionDolar.py" beforeDir="false" afterPath="$PROJECT_DIR$/cotizacionDolar.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/fideo/proyectos/cotizacionDolar",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }

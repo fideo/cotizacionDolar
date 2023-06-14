@@ -1,5 +1,6 @@
 import time
 import requests
+import os
 from bs4 import BeautifulSoup
 from plyer import notification
 
@@ -20,26 +21,30 @@ dolar = 0
 
 # Recorro la tabla encontrando los tags tbody
 for cotizacion in tabla_dolar.find_all('tbody'):
-  dolar = cotizacion.find_all('td')[2].text
-  dolar_formateado = dolar[0:6] + " "
-  #print(dolar[0:6] + " ")
-  print(dolar_formateado)
+    dolar = cotizacion.find_all('td')[2].text
+    dolar_formateado = dolar[0:6] + " "
+    # print(dolar[0:6] + " ")
+    print(dolar_formateado)
 
-print("Hora act. " + tabla_hora.text[20:25])
+# print("Hora act. " + tabla_hora.text[20:25])
 
+path_actual = os.getcwd()
+print(path_actual)
 # Abro el archivo valorDolar.txt donde almaceno el valor dolar.
-valorArchivo = open('/home/fideo/proyectos/cotizacionDolar/cotizacion.txt', "r+")
-cotizacionActual=valorArchivo.read(10).strip("\n")
+valorArchivo = open(path_actual+'/cotizacion.txt', "r+")
+cotizacionActual = valorArchivo.read(10).strip("\n")
 
-#if cotizacionActual != dolar:
-#    notification.notify(
-#                title="CAMBIÓ LA COTIZACIÓN DEL DOLAR",
-#                message=dolar_formateado,
-#
-#                # displaying time
-#                timeout=2
-#        )
-#    time.sleep(10)
+# print(cotizacionActual[0:6] + " - " + dolar[0:6])
+
+if cotizacionActual[0:6] != dolar[0:6]:
+    notification.notify(
+        title="CAMBIÓ LA COTIZACIÓN DEL DOLAR",
+        message=dolar_formateado,
+        app_icon=path_actual+"/iconoDolar.ico",
+        # displaying time
+        timeout=10
+        )
+    time.sleep(5)
 
 # Me posiciono en el primer lugar del documento para actualizar el archivo.
 valorArchivo.seek(0, 0)
