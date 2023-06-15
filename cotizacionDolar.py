@@ -31,7 +31,8 @@ print(" - Hora act. " + tabla_hora.text[20:25])
 path_actual = os.getcwd()
 # print(path_actual)
 # Abro el archivo valorDolar.txt donde almaceno el valor dolar.
-valorArchivo = open(path_actual+'/cotizacion.txt', "r+")
+# valorArchivo = open(path_actual+'/cotizacion.txt', "r+")
+valorArchivo = open('/home/fideo/proyectos/cotizacionDolar/cotizacion.txt', "r+")
 cotizacionActual = valorArchivo.read(17).strip("\n")
 
 # print(cotizacionActual[0:6] + " - " + dolar[0:6])
@@ -41,7 +42,7 @@ if (cotizacionActual[0:6] != dolar[0:6]) or (cotizacionActual[12:17] != tabla_ho
     notification.notify(
         title="CAMBIÓ LA COTIZACIÓN DEL DOLAR",
         message=dolar_formateado,
-        app_icon=path_actual+"/iconoDolar.ico",
+        app_icon="/home/fideo/proyectos/cotizacionDolar/iconoDolar.ico",
         # displaying time
         timeout=10
         )
