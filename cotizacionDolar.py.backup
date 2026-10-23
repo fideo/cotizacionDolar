@@ -1,0 +1,96 @@
+import os
+import sys
+import time
+import requests
+from windows_toasts import InteractableWindowsToaster, Toast
+
+# Configuración de rutas según entorno (ejecutable o script .py)
+BASE_DIR = (
+    os.path.dirname(sys.executable)
+    if getattr(sys, "frozen", False)
+    else os.path.dirname(os.path.abspath(__file__))
+)
+
+path_valor = os.path.join(BASE_DIR, "valorDolar.txt")
+path_hora = os.path.join(BASE_DIR, "horaDolar.txt")
+path_icono = os.path.join(BASE_DIR, "iconoDolar.ico")
+
+# URL directa a cotizaciones del BNA vía API pública
+api_url = "https://dolarapi.com/v1/dolares/oficial"
+
+try:
+    response = requests.get(api_url, timeout=10)
+
+    if response.status_code != 200:
+        print(f"Error HTTP: {response.status_code}")
+        sys.exit(1)
+
+    res_api = response.json()
+
+    # Extraer valor de venta y dar formato
+    dolar_venta = str(res_api["venta"]).strip()
+    dolar_formateado = dolar_venta[0:6]
+
+    # Tomar hora de la API si existe, sino del sistema
+    if "fechaActualizacion" in res_api and res_api["fechaActualizacion"]:
+        hora_actual = res_api["fechaActualizacion"].split("T")[1][0:5]
+    else:
+        hora_actual = time.strftime("%H:%M")
+
+except Exception as e:
+    print(f"Error al obtener cotización: {e}")
+    sys.exit(1)
+
+print(f"Cotización obtenida: ${dolar_formateado} - Hora: {hora_actual}")
+
+# --- Lectura de Estados Anteriores ---
+valor_anterior = ""
+if os.path.exists(path_valor):
+    with open(path_valor, "r", encoding="utf-8") as f:
+        valor_anterior = f.read().strip()
+
+hora_anterior = ""
+if os.path.exists(path_hora):
+    with open(path_hora, "r", encoding="utf-8") as f:
+        hora_anterior = f.read().strip()
+
+# --- Verificación de Cambios ---
+hubo_cambio_valor = valor_anterior != dolar_formateado
+hubo_cambio_hora = hora_anterior != hora_actual
+
+# --- Verificación de Cambios ---
+hubo_cambio_valor = valor_anterior != dolar_formateado
+hubo_cambio_hora = hora_anterior != hora_actual
+
+# Si cambia el valor o la hora se notifica
+if hubo_cambio_valor or hubo_cambio_hora:
+
+    if hubo_cambio_valor:
+        titulo = "CAMBIÓ LA COTIZACIÓN DEL DÓLAR"
+        mensaje = f"Nuevo valor: ${dolar_formateado} (Hora: {hora_actual})"
+    else:
+        titulo = "ACTUALIZACIÓN DE HORARIO DÓLAR"
+        mensaje = f"Valor actual: ${dolar_formateado} (Nueva Hora: {hora_actual})"
+
+    # Disparar notificación nativa de Windows
+    toaster = InteractableWindowsToaster("Cotizador Dólar BNA")
+    
+    toast = Toast()
+    toast.text_fields = [titulo, mensaje]
+
+    # Si existe el ícono, se agrega convirtiendo la ruta con ToastDisplayImage
+    if os.path.exists(path_icono):
+        from windows_toasts import ToastDisplayImage
+        toast.AddImage(ToastDisplayImage.fromPath(path_icono))
+        
+    toaster.show_toast(toast)
+    time.sleep(1)
+
+# --- Actualizamos los archivos .txt correspondientes ---
+if hubo_cambio_valor:
+    with open(path_valor, "w", encoding="utf-8") as f:
+        f.write(dolar_formateado)
+
+if hubo_cambio_hora:
+    with open(path_hora, "w", encoding="utf-8") as f:
+        f.write(hora_actual)
