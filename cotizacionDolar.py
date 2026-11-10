@@ -3,8 +3,8 @@ import requests
 import os
 import sys
 from bs4 import BeautifulSoup
-#from plyer import notification
-from windows_toasts import InteractableWindowsToaster, Toast
+from plyer import notification
+#from windows_toasts import InteractableWindowsToaster, Toast
 
 # Obtengo la url del sitio a obtener los datos
 url = 'https://www.bna.com.ar/Personas'
@@ -83,7 +83,8 @@ if (cotizacionActual[0:6] != dolar[0:6]) or (cotizacionActual[12:17] != tabla_ho
     else:
         titulo = "ACTUALIZACIÓN DE HORARIO DÓLAR"
         mensaje = f"Valor actual: ${dolar_formateado} (Nueva Hora: {hora_actual})"
-
+    
+    '''
     # Disparar notificación nativa de Windows
     toaster = InteractableWindowsToaster("Cotizador Dólar BNA")
     
@@ -97,8 +98,9 @@ if (cotizacionActual[0:6] != dolar[0:6]) or (cotizacionActual[12:17] != tabla_ho
         
     toaster.show_toast(toast)
     time.sleep(1)
+    '''
 
-    '''notification.notify(
+    notification.notify(
         title="CAMBIÓ LA COTIZACIÓN DEL DOLAR",
         message=dolar_formateado,
         # app_icon="/home/fideo/proyectos/cotizacionDolar/iconoDolar.ico",
@@ -107,7 +109,7 @@ if (cotizacionActual[0:6] != dolar[0:6]) or (cotizacionActual[12:17] != tabla_ho
         timeout=10
         )
     time.sleep(5)
-    '''
+    
 
 # Me posiciono en el primer lugar del documento para actualizar el archivo.
 valorArchivo.seek(0, 0)

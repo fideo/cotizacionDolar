@@ -21,3 +21,30 @@ pyinstaller --onefile --collect-all plyer cotizacionDolar.py
 
 La linea siguiente es para que no muestre la ventanda de consola:
 pyinstaller --onefile --noconsole --collect-all plyer cotizacionDolar.py 
+
+Para que muestre el popup en sistemas GNU/Linux debemos realizar lo siguiente:
+Crear el servicio
+~/.config/systemd/user/cotizacion.service
+```
+[Unit]
+Description=Cotización dólar
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/fideo/proyectos/cotizacionDolar
+ExecStart=/home/fideo/proyectos/cotizacionDolar/venv/bin/python cotizacionDolar.py
+```
+
+Luego configuración del timer
+```
+~/.config/systemd/user/cotizacion.timer
+[Unit]
+Description=Cotización dólar cada 5 minutos
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target
+```
